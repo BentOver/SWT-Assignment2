@@ -12,7 +12,7 @@
                 input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input)) continue;
 
-                switch (input[0])
+                switch (input[0]) 
                 {
                     case 'E':
                         finish = true;
