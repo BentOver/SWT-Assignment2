@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ladeskab.Interfaces;
 
-namespace Ladeskab
+namespace LadeSkabClassLibrary
 {
     public class StationControl
     {

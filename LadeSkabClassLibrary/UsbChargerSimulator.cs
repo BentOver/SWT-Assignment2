@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Timers;
 
-namespace UsbSimulator
+namespace LadeSkabClassLibrary
 {
     public class UsbChargerSimulator : IUsbCharger
     {

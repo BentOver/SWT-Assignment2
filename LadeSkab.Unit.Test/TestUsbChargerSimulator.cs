@@ -1,12 +1,8 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using LadeSkabClassLibrary;
+using NUnit.Framework;
 
-namespace UsbSimulator.Test
+namespace LadeSkab.Unit.Test
 {
     [TestFixture]
     public class TestUsbChargerSimulator
