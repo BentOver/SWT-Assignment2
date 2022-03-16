@@ -9,7 +9,7 @@ namespace LadeSkabClassLibrary.Controls
 {
     public interface IChargeControl
     {
-        event EventHandler<ChargeControlEventArgs> ChargeControlEvent;
+        event EventHandler<CurrentEventArgs> ChargeControlEvent;
         void StartCharge();
         void StopCharge();
 

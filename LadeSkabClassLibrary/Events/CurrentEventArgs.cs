@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace LadeSkabClassLibrary.Events
 {
-    public class ChargeControlEventArgs: EventArgs
+    public class CurrentEventArgs : EventArgs
     {
+        public double CurrentValue { get; set; }
     }
 }
