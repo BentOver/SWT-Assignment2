@@ -10,6 +10,9 @@ namespace LadeSkabClassLibrary.Interfaces
     public interface IDoor
     {
         event EventHandler<DoorChangedEventArgs> DoorChangedEvent;
+
+        void LockDoor();
+        void UnlockDoor();
     }
 
 }

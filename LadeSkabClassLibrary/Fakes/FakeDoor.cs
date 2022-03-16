@@ -15,13 +15,23 @@ namespace LadeSkabClassLibrary.Fakes
 
         public event EventHandler<DoorChangedEventArgs> DoorChangedEvent;
 
-        public void SetTemp(DoorState newDoorState)
+        public void SetDoorState(DoorState newDoorState)
         {
             if (newDoorState != _oldState)
             {
                 OnDoorChanged(new DoorChangedEventArgs { DoorState = newDoorState });
                 _oldState = newDoorState;
             }
+        }
+
+        public void LockDoor()
+        {
+            SetDoorState(DoorState.Locked);
+        }
+
+        public void UnlockDoor()
+        {
+            SetDoorState(DoorState.Closed);
         }
 
         protected virtual void OnDoorChanged(DoorChangedEventArgs e)

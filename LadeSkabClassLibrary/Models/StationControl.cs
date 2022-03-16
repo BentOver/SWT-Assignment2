@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ladeskab.Interfaces;
+using LadeSkabClassLibrary.Controls;
+using LadeSkabClassLibrary.Events;
+using LadeSkabClassLibrary.Interfaces;
 
 namespace LadeSkabClassLibrary
 {
@@ -13,27 +16,34 @@ namespace LadeSkabClassLibrary
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
         private enum LadeskabState
         {
-            Available,
+            Closed,
             Locked,
             DoorOpen
         };
+
 
         // Her mangler flere member variable
         private LadeskabState _state;
         private IChargeControl _charger;
         private int _oldId;
-        private IDoor _door;
+        private DoorState _doorState;
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
-        // Her mangler constructor
+        public StationControl(IDoor door, IRfidReader rfidReader, IChargeControl chargeControl)
+        {
+            door.DoorChangedEvent += HandleDoorChangedEvent;
+            rfidReader.RfidReaderChangedEvent += HandleRfidChangedEvent;
+
+            _charger = chargeControl;
+        }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
         private void RfidDetected(int id)
         {
             switch (_state)
             {
-                case LadeskabState.Available:
+                case LadeskabState.Closed:
                     // Check for ladeforbindelse
                     if (_charger.Connected)
                     {
@@ -71,7 +81,7 @@ namespace LadeSkabClassLibrary
                         }
 
                         Console.WriteLine("Tag din telefon ud af skabet og luk døren");
-                        _state = LadeskabState.Available;
+                        _state = LadeskabState.Closed;
                     }
                     else
                     {
@@ -82,6 +92,39 @@ namespace LadeSkabClassLibrary
             }
         }
 
+        private void DoorStateChangedDetected(DoorState doorState)
+        {
+            switch (doorState)
+            {
+                case DoorState.Closed:
+                    Console.WriteLine("Indlæs RFID");
+                    break;
+                case DoorState.Opened:
+                    Console.WriteLine("Tilslut telefon");
+                    break;
+                case DoorState.Locked:
+                    //
+                    break;
+                default:
+                    if (false)
+                    {
+
+                    }
+                    break;
+
+            }
+        }
+
         // Her mangler de andre trigger handlere
+        private void HandleDoorChangedEvent(object sender, DoorChangedEventArgs e)
+        {
+            DoorStateChangedDetected(e.DoorState);
+        }
+
+        private void HandleRfidChangedEvent(object sender, RfidReaderChangedEventArgs e)
+        {
+            RfidDetected(e.RfidRead);
+        }
+
     }
 }

@@ -11,16 +11,16 @@ namespace LadeSkabClassLibrary.Fakes
 {
     public class FakeRfidReader : IRfidReader
     {
-        private RFIDState _oldState;
+        private int _oldRfid;
 
         public event EventHandler<RfidReaderChangedEventArgs> RfidReaderChangedEvent;
 
-        public void SetTemp(RFIDState newRFIDState)
+        public void SetRFIDState(int newRFID)
         {
-            if (newRFIDState != _oldState)
+            if (newRFID != _oldRfid)
             {
-                OnRFIDChanged(new RfidReaderChangedEventArgs { RfidState = newRFIDState });
-                _oldState = newRFIDState;
+                OnRFIDChanged(new RfidReaderChangedEventArgs { RfidRead = newRFID });
+                _oldRfid = newRFID;
             }
         }
 
