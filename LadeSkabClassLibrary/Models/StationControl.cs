@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LadeSkabClassLibrary.Interfaces;
 using LadeSkabClassLibrary.Controls;
 using LadeSkabClassLibrary.Events;
 
@@ -26,6 +25,7 @@ namespace LadeSkabClassLibrary
         private IChargeControl _charger;
         private int _oldId;
         private DoorState _doorState;
+        private IDoor _door;
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
@@ -35,6 +35,7 @@ namespace LadeSkabClassLibrary
             rfidReader.RfidReaderChangedEvent += HandleRfidChangedEvent;
 
             _charger = chargeControl;
+            _door = door;
         }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
