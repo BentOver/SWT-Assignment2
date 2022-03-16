@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LadeSkabClassLibrary.Controls;
 using LadeSkabClassLibrary.Events;
+using LadeSkabClassLibrary.Interfaces;
 
 namespace LadeSkabClassLibrary
 {
