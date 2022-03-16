@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace LadeSkabClassLibrary.Events
 {
-    public enum RFIDState
-    {
-        Accepted,
-        Declined
-    }
+
     public class RfidReaderChangedEventArgs : EventArgs
     {
-        public RFIDState RfidState { get; set; }
+        public int RfidRead { get; set; }
     }
 }

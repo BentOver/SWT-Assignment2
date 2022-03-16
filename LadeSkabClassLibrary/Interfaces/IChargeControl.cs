@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LadeSkabClassLibrary.Controls
 {
-    internal class IChargeControl
+    public interface IChargeControl
     {
         event EventHandler<ChargeControlEventArgs> ChargeControlEvent;
     }
