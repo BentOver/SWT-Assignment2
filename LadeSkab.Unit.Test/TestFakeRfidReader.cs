@@ -20,9 +20,9 @@ namespace LadeSkab.Unit.Test
             _uut = new FakeRfidReader();
         }
 
-        [TestCase(1,1,true)]
-        [TestCase(2,5,false)]
-        public void SetRfidDifferentStates(int newRFID, int oldRFID,bool expectedResult)
+        [TestCase(1,1,false)]
+        [TestCase(2,5,true)]
+        public void SetRfidDifferentStatesIsTrueWhenOldAndNewRfidIsDifferent(int newRFID, int oldRFID,bool expectedResult)
         {
             var WasCalled = false;
             _uut.SetRFIDState(oldRFID); // set _oldRFID property
@@ -30,7 +30,7 @@ namespace LadeSkab.Unit.Test
             
             _uut.SetRFIDState(newRFID); //what is compared to _oldRFID
 
-            Assert.That(WasCalled, Is.SameAs(expectedResult));
+            Assert.That(WasCalled, Is.EqualTo(expectedResult));
         }
 
 
