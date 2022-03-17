@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWT-Assignment2", "SWT-Assignment2\SWT-Assignment2.csproj", "{9283826B-493B-40FE-8E0E-02C91903AC70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LadeSkabClassLibrary", "LadeSkabClassLibrary\LadeSkabClassLibrary.csproj", "{CC9A0EE5-7C25-44D7-B7D4-EA2B1A96F541}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LadeSkabClassLibrary", "LadeSkabClassLibrary\LadeSkabClassLibrary.csproj", "{CC9A0EE5-7C25-44D7-B7D4-EA2B1A96F541}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LadeSkab.Unit.Test", "LadeSkab.Unit.Test\LadeSkab.Unit.Test.csproj", "{9E246E53-AC0F-4006-AA23-D467F5416A30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LadeSkab.Unit.Test", "LadeSkab.Unit.Test\LadeSkab.Unit.Test.csproj", "{9E246E53-AC0F-4006-AA23-D467F5416A30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
