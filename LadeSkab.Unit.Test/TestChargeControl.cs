@@ -37,44 +37,42 @@ namespace LadeSkab.Unit.Test
         }
 
 
-        [TestCase(true, true, 0, "Fejl 744: Ladning stopppet grundet fejl")]
-        [TestCase(true, false, 500, "Telefonen er ved at lade")]
-        [TestCase(false, true, 0, "Telefonen er fuldt opladt")]
-        [TestCase(false, false, 0, "Telefonen er fuldt opladt")]
-        public void SimulateOverloadConectedTestEventConsoleOutput(bool Connected, bool Overload, double Current, string consoleoutput)
+        [TestCase(true, true, "Fejl 744: Ladning stopppet grundet fejl")]
+        [TestCase(true, false, "Telefonen er ved at lade")]
+        [TestCase(false, true, "")]
+        [TestCase(false, false, "")]
+        public void SimulateOverloadConectedTestEventConsoleOutput(bool Connected, bool Overload, string consoleoutput)
         {
-            _usbChargerSimulator.SimulateConnected(true);
-            _usbChargerSimulator.SimulateOverload(false);
-
-            _usbChargerSimulator.StartCharge();
-
-
-
+            _usbChargerSimulator.SimulateConnected(Connected);
+            _usbChargerSimulator.SimulateOverload(Overload);
+            string l = String.Empty;
             using (StringWriter sw = new StringWriter())
             {
                 Console.SetOut(sw);
 
-                _uut = new ChargeControl(_usbChargerSimulator);
                 _usbChargerSimulator.StartCharge();
+                string output = new string("");
+                long milliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
-                string expected = string.Format(consoleoutput+"{0}", Environment.NewLine);
-                //Assert.That((expected),Is.EqualTo(sw.ToString()));
-                Assert.AreEqual(consoleoutput,sw.ToString());
+                while (DateTimeOffset.Now.ToUnixTimeMilliseconds() < milliseconds+1000)
+                {
+                    if (!string.IsNullOrEmpty(sw.ToString()))
+                    {
+                        output = sw.ToString();
+                        break;
+                    }
+
+                }
+                _usbChargerSimulator.StopCharge();
+                sw.Close();
+                
+                Assert.AreEqual(consoleoutput ,output.Replace(Environment.NewLine, ""));
+
             }
 
             Console.SetOut(new StreamWriter(Console.OpenStandardError()));
         }
 
-        //using (StringWriter sw = new StringWriter())
-        //{
-        //    Console.SetOut(sw);
-
-        //    ConsoleUser cu = new ConsoleUser();
-        //    cu.DoWork();
-
-        //    string expected = string.Format("Ploeh{0}", Environment.NewLine);
-        //    Assert.AreEqual<string>(expected, sw.ToString());
-        //}
 
     }
 }

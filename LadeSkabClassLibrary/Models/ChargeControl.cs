@@ -29,14 +29,14 @@ namespace LadeSkabClassLibrary.Models
             _usbCharger.StopCharge();
         }
 
-        private void HandleCurrentChangedEvent(object sender, CurrentEventArgs e)
+        public void HandleCurrentChangedEvent(object sender, CurrentEventArgs e)
         {
             double Current = e.Current;
 
             switch (Current)
             {
                 case 0:
-                    //Do Nothing
+                    //Do nothing
                     break;
                 case double n when (n > 0 && n <= 5):
                     StopCharge();
