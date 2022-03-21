@@ -99,18 +99,14 @@ namespace LadeSkabClassLibrary
             {
                 case DoorState.Closed:
                     Console.WriteLine("Indlæs RFID");
+                    _state = LadeskabState.Closed;
                     break;
                 case DoorState.Opened:
                     Console.WriteLine("Tilslut telefon");
+                    _state = LadeskabState.DoorOpen;
                     break;
                 case DoorState.Locked:
                     //
-                    break;
-                default:
-                    if (false)
-                    {
-
-                    }
                     break;
 
             }

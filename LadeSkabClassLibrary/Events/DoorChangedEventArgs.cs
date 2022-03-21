@@ -8,8 +8,8 @@ namespace LadeSkabClassLibrary.Events
 {
     public enum DoorState
     {
-        Opened,
         Closed,
+        Opened,
         Locked
     }
     public class DoorChangedEventArgs : EventArgs
