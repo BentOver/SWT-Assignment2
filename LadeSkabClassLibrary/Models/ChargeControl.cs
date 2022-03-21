@@ -10,7 +10,6 @@ namespace LadeSkabClassLibrary.Models
 {
     public class ChargeControl: IChargeControl
     {
-        public event EventHandler<CurrentEventArgs> ChargeControlEvent;
         private IUsbCharger _usbCharger;
 
         public ChargeControl(IUsbCharger usbCharger)
@@ -49,8 +48,6 @@ namespace LadeSkabClassLibrary.Models
                     StopCharge();
                     Console.WriteLine("Fejl 744: Ladning stopppet grundet fejl");
                     break;
-                default:
-                    break;
             }
         }
 
@@ -61,10 +58,6 @@ namespace LadeSkabClassLibrary.Models
             {
                 connected = _usbCharger.Connected;
                 return connected;
-            }
-            set
-            {
-                connected = value;
             }
         }
 
