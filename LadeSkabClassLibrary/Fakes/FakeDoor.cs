@@ -17,6 +17,7 @@ namespace LadeSkabClassLibrary.Fakes
 
         public void SetDoorState(DoorState newDoorState)
         {
+            if (_oldState == DoorState.Opened && newDoorState == DoorState.Locked) throw new ArgumentException("Door can't be locked while opened");
             if (newDoorState != _oldState)
             {
                 OnDoorChanged(new DoorChangedEventArgs { DoorState = newDoorState });
