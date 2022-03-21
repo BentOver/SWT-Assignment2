@@ -10,7 +10,6 @@ namespace LadeSkabClassLibrary.Models
 {
     public class ChargeControl: IChargeControl
     {
-        public event EventHandler<CurrentEventArgs> ChargeControlEvent;
         private IUsbCharger _usbCharger;
 
         public ChargeControl(IUsbCharger usbCharger)
