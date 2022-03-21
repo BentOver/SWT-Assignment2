@@ -98,13 +98,6 @@ namespace LadeSkab.Unit.Test
         }
 
 
-        
-        //Check for non event on double lock
-
-
-        //SetDoorState
-
-
 
 
 
