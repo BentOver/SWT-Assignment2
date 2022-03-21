@@ -49,8 +49,6 @@ namespace LadeSkabClassLibrary.Models
                     StopCharge();
                     Console.WriteLine("Fejl 744: Ladning stopppet grundet fejl");
                     break;
-                default:
-                    break;
             }
         }
 
@@ -61,10 +59,6 @@ namespace LadeSkabClassLibrary.Models
             {
                 connected = _usbCharger.Connected;
                 return connected;
-            }
-            set
-            {
-                connected = value;
             }
         }
 
