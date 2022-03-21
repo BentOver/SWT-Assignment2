@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using LadeSkabClassLibrary;
+using LadeSkabClassLibrary.Events;
 using LadeSkabClassLibrary.Fakes;
 using LadeSkabClassLibrary.Models;
 using NUnit.Framework;
@@ -21,6 +22,7 @@ namespace LadeSkab.Unit.Test
             _usbCharger = new UsbChargerSimulator();
             _chargeControl = new ChargeControl(_usbCharger);
             _fakeDoor = new FakeDoor();
+            _fakeDoor.SetDoorState(DoorState.Closed);
             _fakeRfidReader = new FakeRfidReader();
             _uut = new StationControl(_fakeDoor, _fakeRfidReader, _chargeControl);
             
@@ -44,11 +46,7 @@ namespace LadeSkab.Unit.Test
             _fakeRfidReader.SetRFIDState(id);
 
             Assert.That(_uut._state, Is.EqualTo(expectedState));
-
-
             
-
-
         }
 
         [TestCase(1,StationControl.LadeskabState.Closed, StationControl.LadeskabState.Closed)]
