@@ -52,6 +52,7 @@ namespace LadeSkab.Unit.Test
         [Test]
         public void SetDoorStateToLocked()
         {
+            _uut.SetDoorState(DoorState.Closed);
             DoorState testState = DoorState.Locked;
             _uut.DoorChangedEvent += (o, args) => testState = args.DoorState;
             _uut.SetDoorState(testState);
@@ -84,6 +85,29 @@ namespace LadeSkab.Unit.Test
             Assert.That(testState, Is.EqualTo(DoorState.Closed));
         }
 
+        [Test]
+        public void OpenedDoorLock()
+        {
+            DoorState testState = DoorState.Opened;
+            _uut.SetDoorState(testState);
+            _uut.DoorChangedEvent += (o, args) => testState = args.DoorState;
+
+            
+            Assert.Throws<ArgumentException>(() => _uut.LockDoor());
+
+        }
+
+
+        
+        //Check for non event on double lock
+
+
+        //SetDoorState
+
+
+
+
+
+
     }
 }
-
