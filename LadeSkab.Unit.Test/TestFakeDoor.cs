@@ -89,6 +89,8 @@ namespace LadeSkab.Unit.Test
         public void OpenedDoorLock()
         {
             _uut.TryOpenDoor();
+            DoorState testState = DoorState.Opened;
+            _uut.SetDoorState(testState);
 
             Assert.Throws<ArgumentException>(() => _uut.LockDoor());
 
