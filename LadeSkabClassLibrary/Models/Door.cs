@@ -22,5 +22,16 @@ namespace LadeSkabClassLibrary.Models
         {
             //Hardware stuff
         }
+
+
+        public void TryOpenDoor()
+        {
+            //Hardware stuff
+        }
+
+        public void TryCloseDoor()
+        {
+            //Hardware stuff
+        }
     }
 }

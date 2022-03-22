@@ -39,11 +39,11 @@ class Program
                     break;
 
                 case 'O':
-                    _fakeDoor.SetDoorState(DoorState.Opened);
+                    _fakeDoor.TryOpenDoor();
                     break;
 
                 case 'C':
-                    _fakeDoor.SetDoorState(DoorState.Closed);
+                    _fakeDoor.TryCloseDoor();
                     break;
 
                 case 'R':

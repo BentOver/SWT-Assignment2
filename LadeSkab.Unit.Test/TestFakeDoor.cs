@@ -77,7 +77,7 @@ namespace LadeSkab.Unit.Test
         public void ClosedDoorUnlock()
         {
             DoorState testState = DoorState.Closed;
-            _uut.SetDoorState(testState);
+            _uut.TryCloseDoor();
             _uut.DoorChangedEvent += (o, args) => testState = args.DoorState;
 
             _uut.UnlockDoor();
@@ -88,11 +88,8 @@ namespace LadeSkab.Unit.Test
         [Test]
         public void OpenedDoorLock()
         {
-            DoorState testState = DoorState.Opened;
-            _uut.SetDoorState(testState);
-            _uut.DoorChangedEvent += (o, args) => testState = args.DoorState;
+            _uut.TryOpenDoor();
 
-            
             Assert.Throws<ArgumentException>(() => _uut.LockDoor());
 
         }

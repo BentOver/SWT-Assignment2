@@ -35,11 +35,24 @@ namespace LadeSkabClassLibrary.Fakes
             SetDoorState(DoorState.Closed);
         }
 
+        public void TryOpenDoor()
+        {
+            if (_oldState == DoorState.Closed)
+                SetDoorState(DoorState.Opened);
+        }
+
+        public void TryCloseDoor()
+        {
+            if (_oldState == DoorState.Opened)
+                SetDoorState(DoorState.Closed);
+        }
+
         protected virtual void OnDoorChanged(DoorChangedEventArgs e)
         {
             
             DoorChangedEvent?.Invoke(this, e);
         }
+
     }
 
 }

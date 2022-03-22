@@ -13,6 +13,10 @@ namespace LadeSkabClassLibrary.Interfaces
 
         void LockDoor();
         void UnlockDoor();
+
+        void TryOpenDoor();
+
+        void TryCloseDoor();
     }
 
 }

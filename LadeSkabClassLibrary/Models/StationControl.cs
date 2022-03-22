@@ -15,9 +15,9 @@ namespace LadeSkabClassLibrary
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
         public enum LadeskabState
         {
+            DoorOpen,
             Closed,
-            Locked,
-            DoorOpen
+            Locked
         };
 
 
