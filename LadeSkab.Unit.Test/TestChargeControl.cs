@@ -45,7 +45,7 @@ namespace LadeSkab.Unit.Test
         {
             _usbChargerSimulator.SimulateConnected(Connected);
             _usbChargerSimulator.SimulateOverload(Overload);
-            string l = String.Empty;
+
             using (StringWriter sw = new StringWriter())
             {
                 Console.SetOut(sw);
@@ -73,6 +73,46 @@ namespace LadeSkab.Unit.Test
             Console.SetOut(new StreamWriter(Console.OpenStandardError()));
         }
 
+        [Test]
+        public void SimulateChargingUntillFullyChargedTestConsoleOuput()
+        {
+            _usbChargerSimulator.SimulateConnected(true);
+            _usbChargerSimulator.SimulateOverload(false);
+
+            using (StringWriter sw = new StringWriter())
+            {
+                Console.SetOut(sw);
+
+                _usbChargerSimulator.StartCharge();
+                string output;
+                string[] ListOutput = new []{""};
+
+
+                while (_usbChargerSimulator.CurrentValue > 5)
+                {
+                }
+                long milliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                while (DateTimeOffset.Now.ToUnixTimeMilliseconds() < milliseconds + 1000)
+                {
+
+                if (!string.IsNullOrEmpty(sw.ToString()))
+                {
+                    output = sw.ToString();
+                    ListOutput = output.Split(Environment.NewLine);
+
+                    break;
+                }
+
+                }
+                _usbChargerSimulator.StopCharge();
+                sw.Close();
+
+                Assert.AreEqual("Telefonen er ved at lade", ListOutput[0].Replace(Environment.NewLine, ""));
+
+            }
+
+            Console.SetOut(new StreamWriter(Console.OpenStandardError()));
+        }
 
     }
 }
