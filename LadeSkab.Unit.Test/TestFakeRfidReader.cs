@@ -44,7 +44,17 @@ namespace LadeSkab.Unit.Test
         [TestCase(-2)]
         public void SetRFIDState_RfidValueChanged_EventFired(int rfidValue)
         { 
-            _uut.SetRFIDState(rfidValue); // set _oldRFID property
+            _uut.SetRFIDState(rfidValue);
+
+            Assert.That(_receivedEventArgs, Is.Not.Null);
+        }
+
+        [TestCase(1)]
+        [TestCase(-2)]
+        public void SetRFIDState_NoListen_EventFired(int rfidValue)
+        {
+            _uut.RfidReaderChangedEvent += (o, args) => _receivedEventArgs = args;
+            _uut.SetRFIDState(rfidValue);
 
             Assert.That(_receivedEventArgs, Is.Not.Null);
         }
