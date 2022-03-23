@@ -54,7 +54,7 @@ namespace LadeSkab.Unit.Test
         {
             _uut.SetRFIDState(rfidValue);
 
-            Assert.That(_receivedEventArgs, Is.Not.Null);
+            Assert.That(_receivedEventArgs, Is.Null);
         }
 
         //Test at ny værdi bliver sat når metode SetRFIDState bliver kaldt
