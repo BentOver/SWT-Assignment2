@@ -86,6 +86,18 @@ namespace LadeSkab.Unit.Test
         }
 
         [Test]
+        public void ClosedDoorOpen()
+        {
+            DoorState testState = DoorState.Closed;
+            _uut.TryCloseDoor();
+            _uut.DoorChangedEvent += (o, args) => testState = args.DoorState;
+
+            _uut.UnlockDoor(); _uut.SetDoorState(testState);
+
+            Assert.That(testState, Is.EqualTo(DoorState.Closed));
+        }
+
+        [Test]
         public void OpenedDoorLock()
         {
             _uut.TryOpenDoor();
