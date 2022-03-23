@@ -15,7 +15,7 @@ namespace LadeSkab.Unit.Test
     {
         private ChargeControl _uut;
         private IUsbCharger _usbChargerSimulator;
-        
+
         [SetUp]
         public void Setup()
         {
@@ -24,78 +24,44 @@ namespace LadeSkab.Unit.Test
             _uut = new ChargeControl(_usbChargerSimulator);
         }
 
-        //[TestCase(true, true, 0)]
-        //[TestCase(true, false, 500)]
-        //[TestCase(false, true, 0)]
-        //[TestCase(false, false, 0)]
-        //public void SimulateOverloadConectedTestEventCurrentResult(bool Connected, bool Overload, double Current)
-        //{
-        //    _usbChargerSimulator.SimulateConnected(Connected);
-        //    _usbChargerSimulator.SimulateOverload(Overload);
 
-        //    _usbChargerSimulator.StartCharge();
-
-
-        //    Assert.That((_usbChargerSimulator.CurrentValue), Is.EqualTo(Current));
-        //}
-
-
-        [TestCase(600.0, IChargeControl.State.ShortCircuit)]
-        [TestCase(340.0, IChargeControl.State.Charging)]
-        [TestCase(3.0, IChargeControl.State.FullyCharged)]
-        [TestCase(0.0, IChargeControl.State.NoConnection)]
+        [TestCase(int.MaxValue, IChargeControl.State.ShortCircuit)]
+        [TestCase(500.1, IChargeControl.State.ShortCircuit)]
+        [TestCase(500, IChargeControl.State.Charging)]
+        [TestCase(499.9, IChargeControl.State.Charging)]
+        [TestCase(5.1, IChargeControl.State.Charging)]
+        [TestCase(5, IChargeControl.State.FullyCharged)]
+        [TestCase(4.9, IChargeControl.State.FullyCharged)]
+        [TestCase(0.1, IChargeControl.State.FullyCharged)]
+        [TestCase(0, IChargeControl.State.NoConnection)]
         public void SimulateOverloadConectedTestEventConsoleOutput(double current, IChargeControl.State ResultState)
         {
-            //_usbChargerSimulator.SimulateConnected(Connected);
-            //_usbChargerSimulator.SimulateOverload(Overload);
-            _usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs{Current = current});
-
-           
-                
-                Assert.AreEqual( ResultState,_uut.State);
+            _usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs {Current = current});
+            Assert.AreEqual(ResultState, _uut.State);
 
         }
 
-        //[Test]
-        //public void SimulateChargingUntillFullyChargedTestConsoleOuput()
-        //{
-        //    _usbChargerSimulator.SimulateConnected(true);
-        //    _usbChargerSimulator.SimulateOverload(false);
 
-        //    using (StringWriter sw = new StringWriter())
-        //    {
-        //        Console.SetOut(sw);
-
-        //        _usbChargerSimulator.StartCharge();
-        //        string output;
-        //        string[] ListOutput = new []{""};
-
-
-        //        while (_usbChargerSimulator.CurrentValue > 5)
-        //        {
-        //        }
-        //        long milliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-        //        while (DateTimeOffset.Now.ToUnixTimeMilliseconds() < milliseconds + 1000)
-        //        {
-
-        //        if (!string.IsNullOrEmpty(sw.ToString()))
-        //        {
-        //            output = sw.ToString();
-        //            ListOutput = output.Split(Environment.NewLine);
-
-        //            break;
-        //        }
-
-        //        }
-        //        _usbChargerSimulator.StopCharge();
-        //        sw.Close();
-
-        //        Assert.AreEqual("Telefonen er ved at lade", ListOutput[0].Replace(Environment.NewLine, ""));
-
-        //    }
-
-        //    Console.SetOut(new StreamWriter(Console.OpenStandardError()));
-        //}
+        [TestCase(int.MaxValue, false)]
+        [TestCase(0, false)]
+        [TestCase(-0, false)]
+        [TestCase(-0.1, true)]
+        [TestCase(-int.MaxValue, true)]
+        public void CurrentValueIsExceptionThrown(double current, bool expectThrow)
+        {
+            if (expectThrow)
+            {
+                Assert.Throws<ArgumentException>((() =>
+                    _usbChargerSimulator.CurrentValueEvent +=
+                        Raise.EventWith(new CurrentEventArgs {Current = current})));
+            }
+            else
+            {
+                Assert.DoesNotThrow((() =>
+                    _usbChargerSimulator.CurrentValueEvent +=
+                        Raise.EventWith(new CurrentEventArgs { Current = current })));
+            }
+        }
 
     }
 }
