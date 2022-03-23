@@ -108,10 +108,7 @@ namespace LadeSkabClassLibrary
                 case DoorState.Locked:
                     //
                     break;
-<<<<<<< Updated upstream
-=======
-                
->>>>>>> Stashed changes
+
 
             }
         }
