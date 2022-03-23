@@ -18,8 +18,7 @@ namespace LadeSkabClassLibrary.Fakes
         public void SetRFIDState(int newRFID)
         {
             OnRFIDChanged(new RfidReaderChangedEventArgs { RfidRead = newRFID });
-           
-                
+
             _oldRfid = newRFID; //bruges bla. til test af 
         }
 
