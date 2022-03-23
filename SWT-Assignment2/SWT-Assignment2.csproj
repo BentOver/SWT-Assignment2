@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NSubstitute" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LadeSkabClassLibrary\LadeSkabClassLibrary.csproj" />
   </ItemGroup>
 

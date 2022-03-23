@@ -9,9 +9,17 @@ namespace LadeSkabClassLibrary.Controls
 {
     public interface IChargeControl
     {
+        public enum State
+        {
+            Charging,
+            ShortCircuit,
+            NoConnection,
+            FullyCharged,
+        }
+
         void StartCharge();
         void StopCharge();
 
-        bool Connected { get;}
+        public bool Connected { get; set; }
     }
 }

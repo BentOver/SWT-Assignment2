@@ -12,6 +12,8 @@ namespace LadeSkabClassLibrary.Models
     {
         private IUsbCharger _usbCharger;
 
+        public IChargeControl.State State { get; set; }
+
         public ChargeControl(IUsbCharger usbCharger)
         {
             _usbCharger = usbCharger;
@@ -36,17 +38,21 @@ namespace LadeSkabClassLibrary.Models
             {
                 case 0:
                     //Do nothing
+                    State = IChargeControl.State.NoConnection;
                     break;
                 case double n when (n > 0 && n <= 5):
                     StopCharge();
                     Console.WriteLine("Telefonen er fuldt opladt");
+                    State = IChargeControl.State.FullyCharged;
                     break;
                 case double n when (n > 5 && n <= 500):
                     Console.WriteLine("Telefonen er ved at lade");
+                    State = IChargeControl.State.Charging;
                     break;
                 case double n when (n > 500):
                     StopCharge();
                     Console.WriteLine("Fejl 744: Ladning stopppet grundet fejl");
+                    State = IChargeControl.State.ShortCircuit;
                     break;
             }
         }
@@ -59,6 +65,8 @@ namespace LadeSkabClassLibrary.Models
                 connected = _usbCharger.Connected;
                 return connected;
             }
+            set { }
+            
         }
 
     }

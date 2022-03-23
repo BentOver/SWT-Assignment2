@@ -1,9 +1,11 @@
 using System;
 using System.Threading;
 using LadeSkabClassLibrary;
+using LadeSkabClassLibrary.Controls;
 using LadeSkabClassLibrary.Events;
 using LadeSkabClassLibrary.Fakes;
 using LadeSkabClassLibrary.Models;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace LadeSkab.Unit.Test
@@ -14,16 +16,17 @@ namespace LadeSkab.Unit.Test
         private FakeDoor _fakeDoor;
         private StationControl _uut;
         private FakeRfidReader _fakeRfidReader;
-        private ChargeControl _chargeControl;
-        private UsbChargerSimulator _usbCharger;
+        private IChargeControl _chargeControl;
+        //private IUsbCharger _usbCharger;
         [SetUp]
         public void Setup()
         {
-            _usbCharger = new UsbChargerSimulator();
-            _chargeControl = new ChargeControl(_usbCharger);
+            //_usbCharger = Substitute.For<IUsbCharger>();
+            _chargeControl = Substitute.For<IChargeControl>();
             _fakeDoor = new FakeDoor();
             _fakeDoor.SetDoorState(DoorState.Closed);
             _fakeRfidReader = new FakeRfidReader();
+
             _uut = new StationControl(_fakeDoor, _fakeRfidReader, _chargeControl);
             
         }
@@ -43,8 +46,9 @@ namespace LadeSkab.Unit.Test
         public void RfidDetectedStateClosedResultIsLocked(int id, StationControl.LadeskabState state, StationControl.LadeskabState expectedState)
         {
             _uut._state = state;
+            _chargeControl.Connected = true;
             _fakeRfidReader.SetRFIDState(id);
-
+            //RfidDetected changes state
             Assert.That(_uut._state, Is.EqualTo(expectedState));
             
         }
@@ -52,7 +56,7 @@ namespace LadeSkab.Unit.Test
         [TestCase(1,StationControl.LadeskabState.Closed, StationControl.LadeskabState.Closed)]
         public void RfidDetectedStateClosedResultIsClosed(int id, StationControl.LadeskabState state, StationControl.LadeskabState expectedState)
         {
-            _usbCharger.SimulateConnected(false);
+            _chargeControl.Connected = false;
             _uut._state = state;
             _fakeRfidReader.SetRFIDState(id);
 
@@ -84,6 +88,7 @@ namespace LadeSkab.Unit.Test
             StationControl.LadeskabState expectedState)
         {
             _uut._state = StationControl.LadeskabState.Closed;
+            _chargeControl.Connected = true;
             _fakeRfidReader.SetRFIDState(oldRfid);
             _uut._state = state;
             _fakeRfidReader.SetRFIDState(newRfid);
