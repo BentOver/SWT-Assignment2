@@ -52,8 +52,11 @@ namespace LadeSkab.Unit.Test
         [Test]
         public void SetDoorStateToLocked()
         {
-            _uut.SetDoorState(DoorState.Closed);
-            DoorState testState = DoorState.Locked;
+
+            DoorState testState = DoorState.Closed;
+            _uut.SetDoorState(testState);
+
+            testState = DoorState.Locked;
             _uut.DoorChangedEvent += (o, args) => testState = args.DoorState;
             _uut.SetDoorState(testState);
 
