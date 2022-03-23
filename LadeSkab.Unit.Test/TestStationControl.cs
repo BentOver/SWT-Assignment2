@@ -28,11 +28,14 @@ namespace LadeSkab.Unit.Test
             
         }
 
-        [Test]
-        public void DoorIsLocked()
-        {
 
-            
+        [Test]
+        public void DoorIsSetToOpenDoesNotLockAfterRFIDChanged()
+        {
+            _fakeDoor.TryOpenDoor();
+            _fakeRfidReader.SetRFIDState(12);
+            Assert.That(_uut._state, Is.Not.EqualTo(StationControl.LadeskabState.Locked));
+
         }
 
       
