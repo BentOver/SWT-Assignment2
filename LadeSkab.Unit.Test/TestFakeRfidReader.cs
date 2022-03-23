@@ -22,8 +22,6 @@ namespace LadeSkab.Unit.Test
         {
             _receivedEventArgs = null;
             _uut = new FakeRfidReader();
-
-            _uut.RfidReaderChangedEvent += (o, args) => _receivedEventArgs = args;
         }
 
         ////Jesper: Jeg tror ikke at vi skal teste dette for FakeRFIDReader, men nærmere for StationControl, fordi jeg mener det er StationControl logik.
@@ -43,10 +41,20 @@ namespace LadeSkab.Unit.Test
         [TestCase(1)]
         [TestCase(-2)]
         public void SetRFIDState_RfidValueChanged_EventFired(int rfidValue)
-        { 
-            _uut.SetRFIDState(rfidValue); // set _oldRFID property
+        {
+            _uut.RfidReaderChangedEvent += (o, args) => _receivedEventArgs = args;
+            _uut.SetRFIDState(rfidValue);
 
             Assert.That(_receivedEventArgs, Is.Not.Null);
+        }
+
+        [TestCase(1)]
+        [TestCase(-2)]
+        public void SetRFIDState_NoListen_EventFired(int rfidValue)
+        {
+            _uut.SetRFIDState(rfidValue);
+
+            Assert.That(_receivedEventArgs, Is.Null);
         }
 
         //Test at ny værdi bliver sat når metode SetRFIDState bliver kaldt
@@ -55,6 +63,7 @@ namespace LadeSkab.Unit.Test
         [TestCase(-1,13)]
         public void SetRFIDState_RfidValueChanged_CorrectNewRfidValueChanged(int newRFID, int oldRFID)
         {
+            _uut.RfidReaderChangedEvent += (o, args) => _receivedEventArgs = args;
             _uut.SetRFIDState(oldRFID); // set _oldRFID property
             _uut.SetRFIDState(newRFID); //what is compared to _oldRFID
 

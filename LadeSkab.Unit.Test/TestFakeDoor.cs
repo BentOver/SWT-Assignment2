@@ -35,7 +35,7 @@ namespace LadeSkab.Unit.Test
             DoorState testState = DoorState.Closed;
             _uut.DoorChangedEvent += (o, args) => testState = args.DoorState;
             _uut.SetDoorState(testState);
-            
+
             Assert.That(testState, Is.EqualTo(DoorState.Closed));
         }
 
@@ -52,8 +52,11 @@ namespace LadeSkab.Unit.Test
         [Test]
         public void SetDoorStateToLocked()
         {
-            _uut.SetDoorState(DoorState.Closed);
-            DoorState testState = DoorState.Locked;
+
+            DoorState testState = DoorState.Closed;
+            _uut.SetDoorState(testState);
+
+            testState = DoorState.Locked;
             _uut.DoorChangedEvent += (o, args) => testState = args.DoorState;
             _uut.SetDoorState(testState);
 
@@ -67,7 +70,7 @@ namespace LadeSkab.Unit.Test
             DoorState testState = DoorState.Closed;
             _uut.SetDoorState(testState);
             _uut.DoorChangedEvent += (o, args) => testState = args.DoorState;
-            
+
             _uut.LockDoor();
 
             Assert.That(testState, Is.EqualTo(DoorState.Locked));
@@ -91,10 +94,10 @@ namespace LadeSkab.Unit.Test
             DoorState testState = DoorState.Closed;
             _uut.TryCloseDoor();
             _uut.DoorChangedEvent += (o, args) => testState = args.DoorState;
+            _uut.TryOpenDoor();
 
-            _uut.UnlockDoor(); _uut.SetDoorState(testState);
 
-            Assert.That(testState, Is.EqualTo(DoorState.Closed));
+            Assert.That(testState, Is.EqualTo(DoorState.Opened));
         }
 
         [Test]
@@ -107,11 +110,6 @@ namespace LadeSkab.Unit.Test
             Assert.Throws<ArgumentException>(() => _uut.LockDoor());
 
         }
-
-
-
-
-
 
     }
 }
