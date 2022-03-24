@@ -22,8 +22,6 @@ class Program
         _uut = new StationControl(_fakeDoor, _fakeRfidReader, _chargeControl);
 
 
-        // Assemble your system here from all the classes
-
         bool finish = false;
             do
             {

@@ -24,23 +24,9 @@ namespace LadeSkab.Unit.Test
             _uut = new FakeRfidReader();
         }
 
-        ////Jesper: Jeg tror ikke at vi skal teste dette for FakeRFIDReader, men nærmere for StationControl, fordi jeg mener det er StationControl logik.
-        /// 
-        //[TestCase(1,1,false)]
-        //[TestCase(2,5,true)]
-        //public void SetRfidDifferentStatesIsTrueWhenOldAndNewRfidIsDifferent(int newRFID, int oldRFID,bool expectedResult)
-        //{
-        //    var wasCalled = false;
-        //    _uut.SetRFIDState(oldRFID); // set _oldRFID property
-        //    _uut.RfidReaderChangedEvent += (o, args) => wasCalled = true;
-        //    _uut.SetRFIDState(newRFID); //what is compared to _oldRFID
-        //    Assert.That(wasCalled, Is.EqualTo(expectedResult));
-        //}
-
-        //Test at event bliver afsendt når metode SetRFIDState bliver kaldt
         [TestCase(1)]
         [TestCase(-2)]
-        public void SetRFIDState_RfidValueChanged_EventFired(int rfidValue)
+        public void SetRFIDStateRfidValueChangedEventFired(int rfidValue)
         {
             _uut.RfidReaderChangedEvent += (o, args) => _receivedEventArgs = args;
             _uut.SetRFIDState(rfidValue);
@@ -50,18 +36,17 @@ namespace LadeSkab.Unit.Test
 
         [TestCase(1)]
         [TestCase(-2)]
-        public void SetRFIDState_NoListen_EventFired(int rfidValue)
+        public void SetRFIDStateNoListenEventFired(int rfidValue)
         {
             _uut.SetRFIDState(rfidValue);
 
             Assert.That(_receivedEventArgs, Is.Null);
         }
 
-        //Test at ny værdi bliver sat når metode SetRFIDState bliver kaldt
         [TestCase(1,5)]
         [TestCase(2,2)]
         [TestCase(-1,13)]
-        public void SetRFIDState_RfidValueChanged_CorrectNewRfidValueChanged(int newRFID, int oldRFID)
+        public void SetRFIDStateRfidValueChangedCorrectNewRfidValueChanged(int newRFID, int oldRFID)
         {
             _uut.RfidReaderChangedEvent += (o, args) => _receivedEventArgs = args;
             _uut.SetRFIDState(oldRFID); // set _oldRFID property

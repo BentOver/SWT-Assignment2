@@ -3,7 +3,6 @@ using System.Threading;
 using LadeSkabClassLibrary;
 using LadeSkabClassLibrary.Fakes;
 using LadeSkabClassLibrary.Events;
-
 using NUnit.Framework;
 
 namespace LadeSkab.Unit.Test
@@ -18,16 +17,6 @@ namespace LadeSkab.Unit.Test
             _uut = new FakeDoor();
         }
 
-
-        [Test]
-        public void SetDoorStateEvent()
-        {
-            DoorState testState = DoorState.Closed;
-            _uut.DoorChangedEvent += (o, args) => testState = args.DoorState;
-            _uut.SetDoorState(testState);
-
-            Assert.That(testState, Is.EqualTo(DoorState.Closed));
-        }
 
         [Test]
         public void SetDoorStateToClosed()
@@ -77,7 +66,7 @@ namespace LadeSkab.Unit.Test
         }
 
         [Test]
-        public void ClosedDoorUnlock()
+        public void TryClosedDoorUnlock()
         {
             DoorState testState = DoorState.Closed;
             _uut.TryCloseDoor();
@@ -89,7 +78,7 @@ namespace LadeSkab.Unit.Test
         }
 
         [Test]
-        public void ClosedDoorOpen()
+        public void TryClosedDoorOpen()
         {
             DoorState testState = DoorState.Closed;
             _uut.TryCloseDoor();
@@ -101,13 +90,25 @@ namespace LadeSkab.Unit.Test
         }
 
         [Test]
-        public void OpenedDoorLock()
+        public void TryOpenedDoorLock()
         {
             _uut.TryOpenDoor();
             DoorState testState = DoorState.Opened;
             _uut.SetDoorState(testState);
 
             Assert.Throws<ArgumentException>(() => _uut.LockDoor());
+
+        }
+
+        [Test]
+        public void TryClosedDoorLock()
+        {
+            DoorState testState = DoorState.Closed;
+            _uut.TryCloseDoor();
+            _uut.DoorChangedEvent += (o, args) => testState = args.DoorState;
+            _uut.LockDoor();
+
+            Assert.That(testState, Is.EqualTo(DoorState.Locked));
 
         }
 

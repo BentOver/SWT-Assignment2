@@ -17,11 +17,9 @@ namespace LadeSkab.Unit.Test
         private StationControl _uut;
         private FakeRfidReader _fakeRfidReader;
         private IChargeControl _chargeControl;
-        //private IUsbCharger _usbCharger;
         [SetUp]
         public void Setup()
         {
-            //_usbCharger = Substitute.For<IUsbCharger>();
             _chargeControl = Substitute.For<IChargeControl>();
             _fakeDoor = new FakeDoor();
             _fakeDoor.SetDoorState(DoorState.Closed);
@@ -30,7 +28,6 @@ namespace LadeSkab.Unit.Test
             _uut = new StationControl(_fakeDoor, _fakeRfidReader, _chargeControl);
             
         }
-
 
         [Test]
         public void DoorIsSetToOpenDoesNotLockAfterRFIDChanged()
@@ -41,11 +38,8 @@ namespace LadeSkab.Unit.Test
 
         }
 
-      
 
         [TestCase(1,StationControl.LadeskabState.Available, StationControl.LadeskabState.Locked)]
-        
-        //[TestCase(1,StationControl.LadeskabState.Locked, StationControl.LadeskabState.Closed)]
         public void RfidDetectedStateClosedResultIsLocked(int id, StationControl.LadeskabState state, StationControl.LadeskabState expectedState)
         {
             _uut._state = state;
@@ -53,7 +47,6 @@ namespace LadeSkab.Unit.Test
             _fakeRfidReader.SetRFIDState(id);
             //RfidDetected changes state
             Assert.That(_uut._state, Is.EqualTo(expectedState));
-            
         }
 
         [TestCase(1,StationControl.LadeskabState.Available, StationControl.LadeskabState.Available)]
@@ -64,8 +57,6 @@ namespace LadeSkab.Unit.Test
             _fakeRfidReader.SetRFIDState(id);
 
             Assert.That(_uut._state, Is.EqualTo(expectedState));
-
-            
         }
 
         [TestCase(1, StationControl.LadeskabState.DoorOpen, StationControl.LadeskabState.DoorOpen)]
@@ -76,15 +67,8 @@ namespace LadeSkab.Unit.Test
 
             Assert.That(_uut._state, Is.EqualTo(expectedState));
 
-
-
-
-
         }
 
-        //_state er Closed => Locked
-        //_state er DoorOpen => DoorOpen
-        //_state er Locked => Closed
 
         [TestCase(1,1, StationControl.LadeskabState.Locked, StationControl.LadeskabState.Available)]
         public void RfidDetectedLockedStateResultIsClosed(int oldRfid, int newRfid, StationControl.LadeskabState state,
@@ -98,6 +82,7 @@ namespace LadeSkab.Unit.Test
 
             Assert.That(_uut._state, Is.EqualTo(expectedState));
         }
+
         [TestCase(1, StationControl.LadeskabState.Locked, StationControl.LadeskabState.Locked)]
         public void RfidDetectedLockedStateResultIsLocked(int id, StationControl.LadeskabState state,
             StationControl.LadeskabState expectedState)
@@ -108,7 +93,6 @@ namespace LadeSkab.Unit.Test
 
             Assert.That(_uut._state, Is.EqualTo(expectedState));
         }
-
 
     }
 }

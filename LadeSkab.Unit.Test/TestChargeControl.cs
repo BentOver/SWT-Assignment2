@@ -35,7 +35,7 @@ namespace LadeSkab.Unit.Test
         [TestCase(4.9, IChargeControl.State.FullyCharged)]
         [TestCase(0.1, IChargeControl.State.FullyCharged)]
         [TestCase(0, IChargeControl.State.NoConnection)]
-        public void SimulateOverloadConectedTestEventConsoleOutput(double current, IChargeControl.State ResultState)
+        public void CurrentValueEventSetTestForChargeControlState(double current, IChargeControl.State ResultState)
         {
             _usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs {Current = current});
             Assert.AreEqual(ResultState, _uut.State);
@@ -66,7 +66,7 @@ namespace LadeSkab.Unit.Test
 
         [TestCase(true)]
         [TestCase(false)]
-        public void ConnectedValue_USBChargerIsConnected_ValueIsTrue(bool connectValue)
+        public void ConnectedValueUSBChargerIsConnectedValueIsTrue(bool connectValue)
         {
             _uut.Connected = connectValue;
             _usbChargerSimulator.Connected.Returns(connectValue);
@@ -75,7 +75,7 @@ namespace LadeSkab.Unit.Test
         }
 
         [Test]
-        public void StartCharge_()
+        public void StartChargeTestIfReceived()
         {
             _uut.StartCharge();
             _usbChargerSimulator.Received().StartCharge();

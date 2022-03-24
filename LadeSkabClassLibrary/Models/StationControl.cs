@@ -12,7 +12,6 @@ namespace LadeSkabClassLibrary
 {
     public class StationControl
     {
-        // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
         public enum LadeskabState
         {
             DoorOpen,
@@ -21,7 +20,6 @@ namespace LadeSkabClassLibrary
         };
 
 
-        // Her mangler flere member variable
         public LadeskabState _state { get; set; }
         private IChargeControl _charger;
         private int _oldId;
@@ -39,7 +37,6 @@ namespace LadeSkabClassLibrary
             _door = door;
         }
 
-        // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
         private void RfidDetected(int id)
         {
             switch (_state)
@@ -111,7 +108,6 @@ namespace LadeSkabClassLibrary
             }
         }
 
-        // Her mangler de andre trigger handlere
         private void HandleDoorChangedEvent(object sender, DoorChangedEventArgs e)
         {
             DoorStateChangedDetected(e.DoorState);
