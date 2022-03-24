@@ -68,6 +68,7 @@ namespace LadeSkab.Unit.Test
         [TestCase(false)]
         public void ConnectedValue_USBChargerIsConnected_ValueIsTrue(bool connectValue)
         {
+            _uut.Connected = connectValue;
             _usbChargerSimulator.Connected.Returns(connectValue);
 
             Assert.That(_uut.Connected, Is.EqualTo(connectValue));
