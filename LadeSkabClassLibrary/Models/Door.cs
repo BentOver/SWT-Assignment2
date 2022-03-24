@@ -13,25 +13,25 @@ namespace LadeSkabClassLibrary.Models
     {
         public event EventHandler<DoorChangedEventArgs> DoorChangedEvent;
 
-        public void LockDoor()
-        {
-            //Hardware stuff
-        }
+        //public void LockDoor()
+        //{
+        //    //Hardware stuff
+        //}
 
-        public void UnlockDoor()
-        {
-            //Hardware stuff
-        }
+        //public void UnlockDoor()
+        //{
+        //    //Hardware stuff
+        //}
 
 
-        public void TryOpenDoor()
-        {
-            //Hardware stuff
-        }
+        //public void TryOpenDoor()
+        //{
+        //    //Hardware stuff
+        //}
 
-        public void TryCloseDoor()
-        {
-            //Hardware stuff
-        }
+        //public void TryCloseDoor()
+        //{
+        //    //Hardware stuff
+        //}
     }
 }
