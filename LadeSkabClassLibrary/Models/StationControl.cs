@@ -56,12 +56,12 @@ namespace LadeSkabClassLibrary
                             writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
                         }
 
-                        Console.WriteLine("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+                        Console.WriteLine("Ladeskabet optaget");
                         _state = LadeskabState.Locked;
                     }
                     else
                     {
-                        Console.WriteLine("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+                        Console.WriteLine("Tilslutningsfejl");
                     }
 
                     break;
@@ -81,7 +81,7 @@ namespace LadeSkabClassLibrary
                             writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
                         }
 
-                        Console.WriteLine("Tag din telefon ud af skabet og luk døren");
+                        Console.WriteLine("Fjern telefon");
                         _state = LadeskabState.Closed;
                     }
                     else
