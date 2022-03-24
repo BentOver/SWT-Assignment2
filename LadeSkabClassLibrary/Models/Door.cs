@@ -9,29 +9,29 @@ using LadeSkabClassLibrary.Interfaces;
 
 namespace LadeSkabClassLibrary.Models
 {
-    public class Door: IDoor
-    {
-        public event EventHandler<DoorChangedEventArgs> DoorChangedEvent;
+    //public class Door: IDoor
+    //{
+    //    public event EventHandler<DoorChangedEventArgs> DoorChangedEvent;
 
-        //public void LockDoor()
-        //{
-        //    //Hardware stuff
-        //}
+    //    public void LockDoor()
+    //    {
+    //        //Hardware stuff
+    //    }
 
-        //public void UnlockDoor()
-        //{
-        //    //Hardware stuff
-        //}
+    //    public void UnlockDoor()
+    //    {
+    //        //Hardware stuff
+    //    }
 
 
-        //public void TryOpenDoor()
-        //{
-        //    //Hardware stuff
-        //}
+    //    public void TryOpenDoor()
+    //    {
+    //        //Hardware stuff
+    //    }
 
-        //public void TryCloseDoor()
-        //{
-        //    //Hardware stuff
-        //}
-    }
+    //    public void TryCloseDoor()
+    //    {
+    //        //Hardware stuff
+    //    }
+    //}
 }

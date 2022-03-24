@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LadeSkabClassLibrary.Events;
+using LadeSkabClassLibrary.Interfaces;
 
 namespace LadeSkabClassLibrary.Models
 {
-    internal class RfidReader
-    {
-        public event EventHandler<RfidReaderChangedEventArgs> RfidReaderChangedEvent;
-    }
+    //internal class RfidReader : IRfidReader
+    //{
+    //    public event EventHandler<RfidReaderChangedEventArgs> RfidReaderChangedEvent;
+    //}
 }
