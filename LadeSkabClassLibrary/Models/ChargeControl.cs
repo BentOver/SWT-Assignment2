@@ -69,7 +69,7 @@ namespace LadeSkabClassLibrary.Models
                 connected = _usbCharger.Connected;
                 return connected;
             }
-            set { }
+            set { connected = _usbCharger.Connected; }
             
         }
 
