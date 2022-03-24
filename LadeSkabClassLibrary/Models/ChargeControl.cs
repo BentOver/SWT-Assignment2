@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LadeSkabClassLibrary.Controls;
 using LadeSkabClassLibrary.Events;
+using NSubstitute.Exceptions;
 
 namespace LadeSkabClassLibrary.Models
 {
@@ -33,7 +34,10 @@ namespace LadeSkabClassLibrary.Models
         public void HandleCurrentChangedEvent(object sender, CurrentEventArgs e)
         {
             double Current = e.Current;
-
+            if (Current < 0)
+            {
+                throw new ArgumentException("Your phone is charging the system??");
+            }
             switch (Current)
             {
                 case 0:
@@ -65,7 +69,7 @@ namespace LadeSkabClassLibrary.Models
                 connected = _usbCharger.Connected;
                 return connected;
             }
-            set { }
+            set { connected = _usbCharger.Connected; }
             
         }
 
