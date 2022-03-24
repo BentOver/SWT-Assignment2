@@ -1,12 +1,8 @@
 ﻿using System;
+using LadeSkabClassLibrary.Events;
 
 namespace LadeSkabClassLibrary
 {
-    public class CurrentEventArgs : EventArgs
-    {
-        // Value in mA (milliAmpere)
-        public double Current { set; get; }
-    }
 
     public interface IUsbCharger
     {

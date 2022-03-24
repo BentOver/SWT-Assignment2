@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using LadeSkabClassLibrary;
 using LadeSkabClassLibrary.Controls;
+using LadeSkabClassLibrary.Events;
 using LadeSkabClassLibrary.Fakes;
 using LadeSkabClassLibrary.Models;
 using NSubstitute;

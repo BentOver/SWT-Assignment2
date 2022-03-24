@@ -8,6 +8,6 @@ namespace LadeSkabClassLibrary.Events
 {
     public class CurrentEventArgs : EventArgs
     {
-        public double CurrentValue { get; set; }
+        public double Current { get; set; }
     }
 }
