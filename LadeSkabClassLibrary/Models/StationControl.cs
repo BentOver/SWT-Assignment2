@@ -16,7 +16,7 @@ namespace LadeSkabClassLibrary
         public enum LadeskabState
         {
             DoorOpen,
-            Closed,
+            Available,
             Locked
         };
 
@@ -44,7 +44,7 @@ namespace LadeSkabClassLibrary
         {
             switch (_state)
             {
-                case LadeskabState.Closed:
+                case LadeskabState.Available:
                     // Check for ladeforbindelse
                     if (_charger.Connected)
                     {
@@ -82,7 +82,7 @@ namespace LadeSkabClassLibrary
                         }
 
                         Console.WriteLine("Fjern telefon");
-                        _state = LadeskabState.Closed;
+                        _state = LadeskabState.Available;
                     }
                     else
                     {
@@ -99,7 +99,7 @@ namespace LadeSkabClassLibrary
             {
                 case DoorState.Closed:
                     Console.WriteLine("Indlæs RFID");
-                    _state = LadeskabState.Closed;
+                    _state = LadeskabState.Available;
                     break;
                 case DoorState.Opened:
                     Console.WriteLine("Tilslut telefon");

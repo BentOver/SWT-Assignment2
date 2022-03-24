@@ -43,7 +43,7 @@ namespace LadeSkab.Unit.Test
 
       
 
-        [TestCase(1,StationControl.LadeskabState.Closed, StationControl.LadeskabState.Locked)]
+        [TestCase(1,StationControl.LadeskabState.Available, StationControl.LadeskabState.Locked)]
         
         //[TestCase(1,StationControl.LadeskabState.Locked, StationControl.LadeskabState.Closed)]
         public void RfidDetectedStateClosedResultIsLocked(int id, StationControl.LadeskabState state, StationControl.LadeskabState expectedState)
@@ -56,7 +56,7 @@ namespace LadeSkab.Unit.Test
             
         }
 
-        [TestCase(1,StationControl.LadeskabState.Closed, StationControl.LadeskabState.Closed)]
+        [TestCase(1,StationControl.LadeskabState.Available, StationControl.LadeskabState.Available)]
         public void RfidDetectedStateClosedResultIsClosed(int id, StationControl.LadeskabState state, StationControl.LadeskabState expectedState)
         {
             _chargeControl.Connected = false;
@@ -86,11 +86,11 @@ namespace LadeSkab.Unit.Test
         //_state er DoorOpen => DoorOpen
         //_state er Locked => Closed
 
-        [TestCase(1,1, StationControl.LadeskabState.Locked, StationControl.LadeskabState.Closed)]
+        [TestCase(1,1, StationControl.LadeskabState.Locked, StationControl.LadeskabState.Available)]
         public void RfidDetectedLockedStateResultIsClosed(int oldRfid, int newRfid, StationControl.LadeskabState state,
             StationControl.LadeskabState expectedState)
         {
-            _uut._state = StationControl.LadeskabState.Closed;
+            _uut._state = StationControl.LadeskabState.Available;
             _chargeControl.Connected = true;
             _fakeRfidReader.SetRFIDState(oldRfid);
             _uut._state = state;
