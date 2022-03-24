@@ -6,6 +6,7 @@ using LadeSkabClassLibrary.Controls;
 using LadeSkabClassLibrary.Fakes;
 using LadeSkabClassLibrary.Models;
 using NSubstitute;
+using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
 
 namespace LadeSkab.Unit.Test
@@ -70,6 +71,13 @@ namespace LadeSkab.Unit.Test
             _usbChargerSimulator.Connected.Returns(connectValue);
 
             Assert.That(_uut.Connected, Is.EqualTo(connectValue));
+        }
+
+        [Test]
+        public void StartCharge_()
+        {
+            _uut.StartCharge();
+            _usbChargerSimulator.Received().StartCharge();
         }
 
     }
