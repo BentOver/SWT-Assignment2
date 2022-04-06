@@ -4,7 +4,7 @@ using System.Threading;
 using LadeSkabClassLibrary;
 using LadeSkabClassLibrary.Controls;
 using LadeSkabClassLibrary.Events;
-using LadeSkabClassLibrary.Fakes;
+using LadeSkabClassLibrary.Interfaces;
 using LadeSkabClassLibrary.Models;
 using NSubstitute;
 using NSubstitute.ReceivedExtensions;
@@ -17,13 +17,15 @@ namespace LadeSkab.Unit.Test
     {
         private ChargeControl _uut;
         private IUsbCharger _usbChargerSimulator;
+        private IDisplay _display;
 
         [SetUp]
         public void Setup()
         {
 
             _usbChargerSimulator = Substitute.For<IUsbCharger>();
-            _uut = new ChargeControl(_usbChargerSimulator);
+            _display= Substitute.For<IDisplay>();
+            _uut = new ChargeControl(_usbChargerSimulator, _display);
         }
 
 

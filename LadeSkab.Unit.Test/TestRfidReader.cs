@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LadeSkabClassLibrary.Events;
-using LadeSkabClassLibrary.Fakes;
+using LadeSkabClassLibrary.Models;
 using NuGet.Frameworks;
 using NUnit.Framework;
 
@@ -12,16 +12,16 @@ namespace LadeSkab.Unit.Test
 {
 
     [TestFixture]
-    public class TestFakeRfidReader
+    public class TestRfidReader
     {
-        private FakeRfidReader _uut;
+        private RfidReader _uut;
         private RfidReaderChangedEventArgs _receivedEventArgs;
 
         [SetUp]
         public void Setup()
         {
             _receivedEventArgs = null;
-            _uut = new FakeRfidReader();
+            _uut = new RfidReader();
         }
 
         [TestCase(1)]

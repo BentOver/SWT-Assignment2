@@ -1,24 +1,23 @@
 ﻿using System.Diagnostics;
 using LadeSkabClassLibrary;
 using LadeSkabClassLibrary.Events;
-using LadeSkabClassLibrary.Fakes;
 using LadeSkabClassLibrary.Models;
 
 class Program
 {
     static void Main(string[] args)
     {
-        FakeDoor _fakeDoor;
+        Door _fakeDoor;
         StationControl _uut;
-        FakeRfidReader _fakeRfidReader;
+        RfidReader _fakeRfidReader;
         ChargeControl _chargeControl;
         UsbChargerSimulator _usbCharger;
 
         
         _usbCharger = new UsbChargerSimulator();
         _chargeControl = new ChargeControl(_usbCharger);
-        _fakeDoor = new FakeDoor();
-        _fakeRfidReader = new FakeRfidReader();
+        _fakeDoor = new Door();
+        _fakeRfidReader = new RfidReader();
         _uut = new StationControl(_fakeDoor, _fakeRfidReader, _chargeControl);
 
 
@@ -47,9 +46,9 @@ class Program
                 case 'R':
                     System.Console.WriteLine("Indtast RFID id: ");
                     string idString = System.Console.ReadLine();
-
-                    int id = Convert.ToInt32(idString);
-                    _fakeRfidReader.SetRFIDState(id);
+                    int id;
+                    if (int.TryParse(idString,out id))
+                        _fakeRfidReader.SetRFIDState(id);
                     break;
 
                 default:

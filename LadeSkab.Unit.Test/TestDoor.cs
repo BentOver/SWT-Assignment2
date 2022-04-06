@@ -1,20 +1,20 @@
 using System;
 using System.Threading;
 using LadeSkabClassLibrary;
-using LadeSkabClassLibrary.Fakes;
 using LadeSkabClassLibrary.Events;
+using LadeSkabClassLibrary.Models;
 using NUnit.Framework;
 
 namespace LadeSkab.Unit.Test
 {
     [TestFixture]
-    public class TestFakeDoor
+    public class TestDoor
     {
-        private FakeDoor _uut;
+        private Door _uut;
         [SetUp]
         public void Setup()
         {
-            _uut = new FakeDoor();
+            _uut = new Door();
         }
 
 

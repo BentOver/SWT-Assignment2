@@ -3,7 +3,7 @@ using System.Threading;
 using LadeSkabClassLibrary;
 using LadeSkabClassLibrary.Controls;
 using LadeSkabClassLibrary.Events;
-using LadeSkabClassLibrary.Fakes;
+using LadeSkabClassLibrary.Interfaces;
 using LadeSkabClassLibrary.Models;
 using NSubstitute;
 using NUnit.Framework;
@@ -13,19 +13,22 @@ namespace LadeSkab.Unit.Test
     [TestFixture]
     public class TestStationControl
     {
-        private FakeDoor _fakeDoor;
+        private Door _fakeDoor;
         private StationControl _uut;
-        private FakeRfidReader _fakeRfidReader;
+        private RfidReader _fakeRfidReader;
         private IChargeControl _chargeControl;
+        private IDisplay _display;
+
         [SetUp]
         public void Setup()
         {
             _chargeControl = Substitute.For<IChargeControl>();
-            _fakeDoor = new FakeDoor();
+            _display = Substitute.For<IDisplay>();
+            _fakeDoor = new Door();
             _fakeDoor.SetDoorState(DoorState.Closed);
-            _fakeRfidReader = new FakeRfidReader();
+            _fakeRfidReader = new RfidReader();
 
-            _uut = new StationControl(_fakeDoor, _fakeRfidReader, _chargeControl);
+            _uut = new StationControl(_fakeDoor, _fakeRfidReader, _chargeControl, _display);
             
         }
 

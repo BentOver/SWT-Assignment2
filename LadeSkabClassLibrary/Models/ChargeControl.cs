@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LadeSkabClassLibrary.Controls;
 using LadeSkabClassLibrary.Events;
+using LadeSkabClassLibrary.Interfaces;
 using NSubstitute.Exceptions;
 
 namespace LadeSkabClassLibrary.Models
@@ -14,10 +15,11 @@ namespace LadeSkabClassLibrary.Models
         private IUsbCharger _usbCharger;
 
         public IChargeControl.State State { get; set; }
-
-        public ChargeControl(IUsbCharger usbCharger)
+        private IDisplay _display;
+        public ChargeControl(IUsbCharger usbCharger, IDisplay display)
         {
             _usbCharger = usbCharger;
+            _display = display;
             usbCharger.CurrentValueEvent += HandleCurrentChangedEvent;
         }
 
@@ -46,16 +48,16 @@ namespace LadeSkabClassLibrary.Models
                     break;
                 case double n when (n > 0 && n <= 5):
                     StopCharge();
-                    Console.WriteLine("Telefonen er fuldt opladt");
+                    _display.PrintDisplayInfo("Telefonen er fuldt opladt");
                     State = IChargeControl.State.FullyCharged;
                     break;
                 case double n when (n > 5 && n <= 500):
-                    Console.WriteLine("Telefonen er ved at lade");
+                    _display.PrintDisplayInfo("Telefonen er ved at lade");
                     State = IChargeControl.State.Charging;
                     break;
                 case double n when (n > 500):
                     StopCharge();
-                    Console.WriteLine("Fejl 744: Ladning stopppet grundet fejl");
+                    _display.PrintDisplayInfo("Fejl 744: Ladning stopppet grundet fejl");
                     State = IChargeControl.State.ShortCircuit;
                     break;
             }

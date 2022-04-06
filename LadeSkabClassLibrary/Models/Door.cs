@@ -5,33 +5,54 @@ using System.Text;
 using System.Threading.Tasks;
 using LadeSkabClassLibrary.Events;
 using LadeSkabClassLibrary.Interfaces;
-
+using LadeSkabClassLibrary.Models;
 
 namespace LadeSkabClassLibrary.Models
 {
-    //public class Door: IDoor
-    //{
-    //    public event EventHandler<DoorChangedEventArgs> DoorChangedEvent;
+    public class Door : IDoor
+    {
+        private DoorState _oldState;
 
-    //    public void LockDoor()
-    //    {
-    //        //Hardware stuff
-    //    }
+        public event EventHandler<DoorChangedEventArgs> DoorChangedEvent;
 
-    //    public void UnlockDoor()
-    //    {
-    //        //Hardware stuff
-    //    }
+        public void SetDoorState(DoorState newDoorState)
+        {
+            if (_oldState == DoorState.Opened && newDoorState == DoorState.Locked) throw new ArgumentException("Door can't be locked while open");
+            if (newDoorState != _oldState)
+            {
+                OnDoorChanged(new DoorChangedEventArgs { DoorState = newDoorState });
+                _oldState = newDoorState;
+            }
+        }
 
+        public void LockDoor()
+        {
+            SetDoorState(DoorState.Locked);
+        }
 
-    //    public void TryOpenDoor()
-    //    {
-    //        //Hardware stuff
-    //    }
+        public void UnlockDoor()
+        {
+            SetDoorState(DoorState.Closed);
+        }
 
-    //    public void TryCloseDoor()
-    //    {
-    //        //Hardware stuff
-    //    }
-    //}
+        public void TryOpenDoor()
+        {
+            if (_oldState == DoorState.Closed)
+                SetDoorState(DoorState.Opened);
+        }
+
+        public void TryCloseDoor()
+        {
+            if (_oldState == DoorState.Opened)
+                SetDoorState(DoorState.Closed);
+        }
+
+        protected virtual void OnDoorChanged(DoorChangedEventArgs e)
+        {
+            
+            DoorChangedEvent?.Invoke(this, e);
+        }
+
+    }
+
 }
