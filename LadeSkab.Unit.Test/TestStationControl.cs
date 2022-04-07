@@ -98,5 +98,13 @@ namespace LadeSkab.Unit.Test
             Assert.That(_uut._state, Is.EqualTo(expectedState));
         }
 
+        [Test]
+        public void DoorIsSetToClosedDisplayMethodIsCalled()
+        {
+            _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Closed });
+
+            _display.ReceivedWithAnyArgs().PrintDisplayInfo(default);
+        }
+
     }
 }
