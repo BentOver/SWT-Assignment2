@@ -7,9 +7,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        Door _fakeDoor;
+        Door _door;
         StationControl _uut;
-        RfidReader _fakeRfidReader;
+        RfidReader _RfidReader;
         ChargeControl _chargeControl;
         UsbChargerSimulator _usbCharger;
         Display _display;
@@ -17,9 +17,9 @@ class Program
         _display = new Display();
         _usbCharger = new UsbChargerSimulator();
         _chargeControl = new ChargeControl(_usbCharger, _display);
-        _fakeDoor = new Door();
-        _fakeRfidReader = new RfidReader();
-        _uut = new StationControl(_fakeDoor, _fakeRfidReader, _chargeControl, _display);
+        _door = new Door();
+        _RfidReader = new RfidReader();
+        _uut = new StationControl(_door, _RfidReader, _chargeControl, _display);
 
 
         bool finish = false;
@@ -37,11 +37,11 @@ class Program
                     break;
 
                 case 'O':
-                    _fakeDoor.TryOpenDoor();
+                    _door.TryOpenDoor();
                     break;
 
                 case 'C':
-                    _fakeDoor.TryCloseDoor();
+                    _door.TryCloseDoor();
                     break;
 
                 case 'R':
@@ -49,7 +49,7 @@ class Program
                     string idString = System.Console.ReadLine();
                     int id;
                     if (int.TryParse(idString,out id))
-                        _fakeRfidReader.SetRFIDState(id);
+                        _RfidReader.SetRFIDState(id);
                     break;
 
                 default:
