@@ -61,9 +61,9 @@ namespace LadeSkab.Unit.Test
             }
             else
             {
-                Assert.DoesNotThrow((() =>
+                Assert.DoesNotThrow(() =>
                     _usbChargerSimulator.CurrentValueEvent +=
-                        Raise.EventWith(new CurrentEventArgs { Current = current })));
+                        Raise.EventWith(new CurrentEventArgs { Current = current }));
             }
         }
 

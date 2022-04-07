@@ -27,8 +27,6 @@ namespace LadeSkab.Unit.Test
             _door = Substitute.For<IDoor>();
             _rfidReader = Substitute.For<IRfidReader>();
 
-            _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs {DoorState = DoorState.Closed});
-
             _uut = new StationControl(_door, _rfidReader, _chargeControl, _display);
             
         }
@@ -36,12 +34,11 @@ namespace LadeSkab.Unit.Test
         [Test]
         public void DoorIsSetToOpenDoesNotLockAfterRFIDChanged()
         {
-            _door.TryOpenDoor();
-            //_rfidReader.SetRFIDState(12);
-            //_rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs {RfidRead = 12});
-            Assert.That(_uut._state, Is.Not.EqualTo(StationControl.LadeskabState.Locked));
-        }
+            _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs {DoorState = DoorState.Opened});
+            _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs {RfidRead = 12});
 
+            _door.DidNotReceive().LockDoor();
+        }
 
         [TestCase(1,StationControl.LadeskabState.Available, StationControl.LadeskabState.Locked)]
         public void RfidDetectedStateClosedResultIsLocked(int id, StationControl.LadeskabState state, StationControl.LadeskabState expectedState)
