@@ -12,13 +12,14 @@ class Program
         RfidReader _fakeRfidReader;
         ChargeControl _chargeControl;
         UsbChargerSimulator _usbCharger;
+        Display _display;
 
-        
+        _display = new Display();
         _usbCharger = new UsbChargerSimulator();
-        _chargeControl = new ChargeControl(_usbCharger);
+        _chargeControl = new ChargeControl(_usbCharger, _display);
         _fakeDoor = new Door();
         _fakeRfidReader = new RfidReader();
-        _uut = new StationControl(_fakeDoor, _fakeRfidReader, _chargeControl);
+        _uut = new StationControl(_fakeDoor, _fakeRfidReader, _chargeControl, _display);
 
 
         bool finish = false;

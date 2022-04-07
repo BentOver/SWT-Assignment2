@@ -39,63 +39,71 @@ namespace LadeSkab.Unit.Test
             _door.TryOpenDoor();
             //_rfidReader.SetRFIDState(12);
             //_rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs {RfidRead = 12});
-            Assert.That(_uut._state, Is.Not.EqualTo(StationControl.LadeskabState.Locked));
+           // Assert.That(_uut._state, Is.Not.EqualTo(StationControl.LadeskabState.Locked));
         }
 
 
-        [TestCase(1,StationControl.LadeskabState.Available, StationControl.LadeskabState.Locked)]
-        public void RfidDetectedStateClosedResultIsLocked(int id, StationControl.LadeskabState state, StationControl.LadeskabState expectedState)
+        [TestCase(1)]
+        public void RfidDetectedStateClosedResultIsLocked(int id)
         {
             _chargeControl.Connected = true;
             _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Closed });
             _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs { RfidRead = id });
-            
-            Assert.That(_uut._state, Is.EqualTo(expectedState));
+
+            _door.Received().LockDoor();
         }
 
-        [TestCase(1,StationControl.LadeskabState.Available, StationControl.LadeskabState.Available)]
-        public void RfidDetectedStateClosedResultIsClosed(int id, StationControl.LadeskabState state, StationControl.LadeskabState expectedState)
+        [TestCase(1)]
+        public void RfidDetectedStateClosedResultIsClosed(int id)
         {
             _chargeControl.Connected = false;
-            //_uut._state = state;
-            //_rfidReader.SetRFIDState(id);
+            _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Closed });
+            _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs { RfidRead = id });
 
-            Assert.That(_uut._state, Is.EqualTo(expectedState));
+            _door.DidNotReceive().LockDoor();
         }
 
-        [TestCase(1, StationControl.LadeskabState.DoorOpen, StationControl.LadeskabState.DoorOpen)]
-        public void RfidDetectedStateDoorOpen(int id, StationControl.LadeskabState state, StationControl.LadeskabState expectedState)
+        [TestCase(1)]
+        public void RfidDetectedStateDoorOpen(int id)
         {
-            //_uut._state = state;
-            //_rfidReader.SetRFIDState(id);
+            
+            _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Opened });
+          
+            _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs { RfidRead = id });
 
-            Assert.That(_uut._state, Is.EqualTo(expectedState));
-
+            _display.ReceivedWithAnyArgs(1).PrintDisplayInfo(default);
         }
 
 
-        [TestCase(1,1, StationControl.LadeskabState.Locked, StationControl.LadeskabState.Available)]
-        public void RfidDetectedLockedStateResultIsClosed(int oldRfid, int newRfid, StationControl.LadeskabState state,
-            StationControl.LadeskabState expectedState)
+        [TestCase(1,1)]
+        public void RfidDetectedLockedStateResultIsClosed(int oldRfid, int newRfid)
         {
-           // _uut._state = StationControl.LadeskabState.Available;
+            
+
             _chargeControl.Connected = true;
-            //_rfidReader.SetRFIDState(oldRfid);
-           // _uut._state = state;
-            //_rfidReader.SetRFIDState(newRfid);
+            _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Closed });
+            _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs { RfidRead = oldRfid });
 
-            Assert.That(_uut._state, Is.EqualTo(expectedState));
+            _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Locked });
+            _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs { RfidRead = newRfid });
+            
+            _door.Received().UnlockDoor();
+
         }
 
-        [TestCase(1, StationControl.LadeskabState.Locked, StationControl.LadeskabState.Locked)]
-        public void RfidDetectedLockedStateResultIsLocked(int id, StationControl.LadeskabState state,
-            StationControl.LadeskabState expectedState)
+        [TestCase(1, 2)]
+        public void RfidDetectedLockedStateResultIsLocked(int oldRfid, int newRfid)
         {
 
-           // _uut._state = state;
-            //_rfidReader.SetRFIDState(id);
+            _chargeControl.Connected = true;
+            _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Closed });
+            _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs { RfidRead = oldRfid });
 
-            Assert.That(_uut._state, Is.EqualTo(expectedState));
+            _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Locked });
+            _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs { RfidRead = newRfid });
+
+
+            _display.ReceivedWithAnyArgs(3).PrintDisplayInfo(default);
         }
 
         [Test]
