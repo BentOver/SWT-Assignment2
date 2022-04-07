@@ -31,18 +31,18 @@ namespace LadeSkab.Unit.Test
             
         }
 
-        [Test]
-        public void DoorIsSetToOpenDoesNotLockAfterRFIDChanged()
+        [TestCase(12)]
+        public void DoorIsSetToOpenDoesNotLockAfterRFIDChanged(int id)
         {
             _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs {DoorState = DoorState.Opened});
-            _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs {RfidRead = 12});
+            _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs {RfidRead = id});
 
             _door.DidNotReceive().LockDoor();
         }
 
 
         [TestCase(1)]
-        public void RfidDetectedStateClosedResultIsLocked(int id)
+        public void RfidDetectedStateClosedChargeControlConnectedResultIsLocked(int id)
         {
             _chargeControl.Connected = true;
             _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Closed });
@@ -52,7 +52,7 @@ namespace LadeSkab.Unit.Test
         }
 
         [TestCase(1)]
-        public void RfidDetectedStateClosedResultIsClosed(int id)
+        public void RfidDetectedStateClosedChargeControlNotConnectedResultIsClosed(int id)
         {
             _chargeControl.Connected = false;
             _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Closed });
@@ -62,7 +62,7 @@ namespace LadeSkab.Unit.Test
         }
 
         [TestCase(1)]
-        public void RfidDetectedStateDoorOpen(int id)
+        public void RfidDetectedStateDoorOpenNothingHappened(int id)
         {
             
             _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Opened });
@@ -74,7 +74,7 @@ namespace LadeSkab.Unit.Test
 
 
         [TestCase(1,1)]
-        public void RfidDetectedLockedStateResultIsClosed(int oldRfid, int newRfid)
+        public void RfidDetectedIsTheSameLockedStateResultIsClosed(int oldRfid, int newRfid)
         {
             
 
@@ -82,7 +82,6 @@ namespace LadeSkab.Unit.Test
             _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Closed });
             _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs { RfidRead = oldRfid });
 
-            _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Locked });
             _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs { RfidRead = newRfid });
             
             _door.Received().UnlockDoor();
@@ -90,18 +89,17 @@ namespace LadeSkab.Unit.Test
         }
 
         [TestCase(1, 2)]
-        public void RfidDetectedLockedStateResultIsLocked(int oldRfid, int newRfid)
+        public void RfidDetectedIsNotTheSameLockedStateResultIsLocked(int oldRfid, int newRfid)
         {
 
             _chargeControl.Connected = true;
             _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Closed });
             _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs { RfidRead = oldRfid });
 
-            _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Locked });
             _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs { RfidRead = newRfid });
 
 
-            _display.ReceivedWithAnyArgs(3).PrintDisplayInfo(default);
+            _door.DidNotReceive().UnlockDoor();
         }
 
         [Test]
