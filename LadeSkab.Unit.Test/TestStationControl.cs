@@ -46,10 +46,10 @@ namespace LadeSkab.Unit.Test
         [TestCase(1,StationControl.LadeskabState.Available, StationControl.LadeskabState.Locked)]
         public void RfidDetectedStateClosedResultIsLocked(int id, StationControl.LadeskabState state, StationControl.LadeskabState expectedState)
         {
-            _uut._state = state;
             _chargeControl.Connected = true;
-            //_rfidReader.SetRFIDState(id);
-            //RfidDetected changes state
+            _door.DoorChangedEvent += Raise.EventWith(new DoorChangedEventArgs { DoorState = DoorState.Closed });
+            _rfidReader.RfidReaderChangedEvent += Raise.EventWith(new RfidReaderChangedEventArgs { RfidRead = id });
+            
             Assert.That(_uut._state, Is.EqualTo(expectedState));
         }
 
@@ -57,7 +57,7 @@ namespace LadeSkab.Unit.Test
         public void RfidDetectedStateClosedResultIsClosed(int id, StationControl.LadeskabState state, StationControl.LadeskabState expectedState)
         {
             _chargeControl.Connected = false;
-            _uut._state = state;
+            //_uut._state = state;
             //_rfidReader.SetRFIDState(id);
 
             Assert.That(_uut._state, Is.EqualTo(expectedState));
@@ -66,7 +66,7 @@ namespace LadeSkab.Unit.Test
         [TestCase(1, StationControl.LadeskabState.DoorOpen, StationControl.LadeskabState.DoorOpen)]
         public void RfidDetectedStateDoorOpen(int id, StationControl.LadeskabState state, StationControl.LadeskabState expectedState)
         {
-            _uut._state = state;
+            //_uut._state = state;
             //_rfidReader.SetRFIDState(id);
 
             Assert.That(_uut._state, Is.EqualTo(expectedState));
@@ -78,10 +78,10 @@ namespace LadeSkab.Unit.Test
         public void RfidDetectedLockedStateResultIsClosed(int oldRfid, int newRfid, StationControl.LadeskabState state,
             StationControl.LadeskabState expectedState)
         {
-            _uut._state = StationControl.LadeskabState.Available;
+           // _uut._state = StationControl.LadeskabState.Available;
             _chargeControl.Connected = true;
             //_rfidReader.SetRFIDState(oldRfid);
-            _uut._state = state;
+           // _uut._state = state;
             //_rfidReader.SetRFIDState(newRfid);
 
             Assert.That(_uut._state, Is.EqualTo(expectedState));
@@ -92,7 +92,7 @@ namespace LadeSkab.Unit.Test
             StationControl.LadeskabState expectedState)
         {
 
-            _uut._state = state;
+           // _uut._state = state;
             //_rfidReader.SetRFIDState(id);
 
             Assert.That(_uut._state, Is.EqualTo(expectedState));

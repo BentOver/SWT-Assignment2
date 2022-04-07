@@ -21,7 +21,7 @@ namespace LadeSkabClassLibrary
         };
 
 
-        public LadeskabState _state { get; set; }
+        public LadeskabState _state { get; private set; }
         private IChargeControl _charger;
         private int _oldId;
         private DoorState _doorState;
